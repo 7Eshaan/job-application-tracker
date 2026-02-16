@@ -10,8 +10,8 @@ const client = mongooseInstance.connection.getClient();
 const db = client.db();
 
 export const auth = betterAuth({
-  database: mongodbAdapter(db, {
-    client,
+  database: mongodbAdapter(db as unknown as any, {
+    client: client as unknown as any,
   }),
   session: {
     cookieCache: {
