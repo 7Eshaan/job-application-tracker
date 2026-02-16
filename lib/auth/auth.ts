@@ -1,17 +1,12 @@
 import { betterAuth } from "better-auth";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
-import { MongoClient } from "mongodb";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { initializeUserBoard } from "../init-user-board";
+import connectDB from "../db";
 
-const uri = process.env.MONGODB_URI;
-
-if (!uri) {
-  throw new Error("Please add your MONGODB_URI to .env.local");
-}
-
-const client = new MongoClient(uri);
+const mongooseInstance = await connectDB();
+const client = mongooseInstance.connection.getClient();
 const db = client.db();
 
 export const auth = betterAuth({
