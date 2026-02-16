@@ -5,7 +5,13 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { initializeUserBoard } from "../init-user-board";
 
-const client = new MongoClient(process.env.MONGODB_URI);
+const uri = process.env.MONGODB_URI;
+
+if (!uri) {
+  throw new Error("Please add your MONGODB_URI to .env.local");
+}
+
+const client = new MongoClient(uri);
 const db = client.db();
 
 export const auth = betterAuth({
